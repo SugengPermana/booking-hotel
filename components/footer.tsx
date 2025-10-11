@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900">
+    <footer className="bg-gray-900" suppressHydrationWarning>
       <div className="max-w-screen-xl mx-auto px-4 w-full py-10 md:py-16">
         <div className="grid md:grid-cols-3 gap-7">
           <div>
