@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -78,6 +79,7 @@ const Footer = () => {
                   name="email"
                   className="w-full p-3 rounded-sm bg-white"
                   placeholder="Example@gmail.com"
+                  suppressHydrationWarning
                 />
               </div>
               <button className="bg-orange-400 p-3 font-bold text-white w-full text-center rounded-sm hover:bg-orange-500">
