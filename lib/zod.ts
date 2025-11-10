@@ -1,0 +1,7 @@
+import {object, string } from "zod";
+export const ContactSchema = object({
+  name: string().min(2, "Name must be at least 2 characters long"),
+  email: string().min(6, "Email at least 6 characters"),
+  subject: string().min(4, "Subject must be at least 4 characters long"),
+  message: string().min(20, "Message must be at least 50 characters long").max(200, "Message must be at most 200 characters long"),
+});
