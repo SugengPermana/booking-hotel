@@ -1,4 +1,13 @@
-import {object, string } from "zod";
+import {object, string, coerce, array } from "zod";
+
+export const RoomSchema = object({
+  name:string().min(1),
+  description: string().min(50),
+  capacity: coerce.number().gt(0),
+  price: coerce.number().gt(0),
+  amenities: array(string()).nonempty(), 
+})
+
 export const ContactSchema = object({
   name: string().min(2, "Name must be at least 2 characters long"),
   email: string().min(6, "Email at least 6 characters"),
