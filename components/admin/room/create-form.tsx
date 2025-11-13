@@ -1,6 +1,52 @@
-import { IoCloudUploadOutline } from "react-icons/io5";
+"use client";
+import { useRef, useState, useTransition } from "react";
+import { PutBlobResult } from "@vercel/blob";
+import { IoCloudUploadOutline, IoTrashOutline } from "react-icons/io5";
+import Image from "next/image";
+import { BarLoader } from "react-spinners";
+import { string } from "zod";
 
 const CreateForm = () => {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState("");
+  const [message, setMessage] = useState("");
+  const [pending, startTranstition] = useTransition();
+
+  const handleUpload = () => {
+    if (!inputFileRef.current?.files) return null;
+    const file = inputFileRef.current.files?.[0];
+    const formData = new FormData();
+    formData.set("file", file);
+    startTranstition(async () => {
+      try {
+        const response = await fetch("/api/upload", {
+          method: "PUT",
+          body: formData,
+        });
+        const data = await response.json();
+        if (response.status !== 200) {
+          setMessage(data.message);
+        }
+        const img = data as PutBlobResult;
+        setImage(img.url);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
+
+  const deleteImage = (image: string) => {
+    startTranstition(async () => {
+      try {
+        await fetch(`/api/upload/?imageurl=${image}`, {
+          method: "DELETE",
+        });
+        setImage("");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
   return (
     <form action="">
       <div className="grid md:grid-cols-12 gap-5">
@@ -19,7 +65,7 @@ const CreateForm = () => {
           <div className="mb-4">
             <textarea
               name="description"
-              rows={8}
+              rows={5}
               className="py-2 px-4 rounded-sm border border-gray-400 w-full"
               placeholder="Description"
             ></textarea>
@@ -51,15 +97,46 @@ const CreateForm = () => {
               className="flex flex-col items-center justify-center text-gray-500 pt-5
           pb-6 z-10"
             >
-              <div className="flex flex-col items-center justify-center">
-                <IoCloudUploadOutline className="size-8" />
-                <p className="mb-1 text-sm font-bold">Select Image</p>
-                <p className="text-xs">
-                  SVG, PNG, JPG, GIF, or Others (Max: 4MB)
-                </p>
-              </div>
+              {pending ? <BarLoader /> : null}
+              {image ? (
+                <button
+                  type="button"
+                  onClick={() => deleteImage(image)}
+                  className="flex items-center justify-center bg-transparent size-6 rounded-sm absolute right-1 top-1 text-white hover:bg-red-400"
+                >
+                  <IoTrashOutline className="size-4 text-transparent hover:text-white" />
+                </button>
+              ) : (
+                <div className="flex flex-col items-center justify-center">
+                  <IoCloudUploadOutline className="size-8" />
+                  <p className="mb-1 text-sm font-bold">Select Image</p>
+                  {message ? (
+                    <p className="text-xs text-red-500">{message}</p>
+                  ) : (
+                    <p className="text-xs">
+                      SVG, PNG, JPG, GIF, or Others (Max: 4MB)
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
-            <input type="file" id="input-file" className="hidden" />
+            {!image ? (
+              <input
+                type="file"
+                ref={inputFileRef}
+                onChange={handleUpload}
+                id="input-file"
+                className="hidden"
+              />
+            ) : (
+              <Image
+                src={image}
+                alt="image"
+                width={640}
+                height={360}
+                className="rounded-md absolute aspect-video object-cover"
+              />
+            )}
           </label>
           <div className="mb-4">
             <input
