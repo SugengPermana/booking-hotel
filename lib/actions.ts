@@ -1,7 +1,49 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { ContactSchema } from "@/lib/zod";
+import { ContactSchema,RoomSchema } from "@/lib/zod";
+import { redirect } from "next/navigation";
+
+export const saveRoom = async (image:string, prevState: unknown, formData:FormData) => {
+  if(!image) return {message: "image is required."}
+
+  const rawdata = {
+    name: formData.get("name"),
+    description: formData.get("description"),
+    capacity: formData.get("capacity"),
+    price: formData.get("price"),
+    amenities: formData.getAll("amenities")
+  };
+
+  const validatedFields = RoomSchema.safeParse(rawdata);
+  if(!validatedFields.success) {
+    return {error: validatedFields.error.flatten().fieldErrors}
+  }
+
+  const {name, description, price, capacity, amenities} = validatedFields.data;
+
+  try {
+    await prisma.room.create({
+      data:{
+        name,
+        description,
+        image,
+        price,
+        capacity,
+        ROomAmenities: {
+          createMany: {
+            data: amenities.map((item) => ({
+              amidenitiesid: item
+            }))
+          }
+        }
+      }
+    })
+  } catch (error) {
+    console.log(error);
+  }
+  redirect("/admin/room");
+}
 
 export const ContactMessage = async (
   prevState: unknown,
