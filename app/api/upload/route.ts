@@ -30,4 +30,4 @@ export const DELETE = async (request: Request) => {
   const imageUrl = searchParams.get("imageUrl") as string;
   await del(imageUrl);
   return NextResponse.json({status: "200"});
-} 
+};
