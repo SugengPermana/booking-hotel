@@ -1,6 +1,12 @@
-const RoomTable = () => {
+import { getRooms } from "@/lib/data";
+import Image from "next/image";
+
+const RoomTable = async () => {
+  const rooms = await getRooms();
+  if (!rooms?.length) return <p>NO ROOM FOUND</p>;
+
   return (
-    <div className="bg-white p-4 mt-5 shadow-sm">
+    <div className="bg-white p-6 mt-5 shadow-sm">
       <table className="w-full divide-y divide-gray-200">
         <thead>
           <tr>
@@ -22,13 +28,27 @@ const RoomTable = () => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          <tr className="hover:bg-gray-100">
-            <td className="px-6 py-4"></td>
-            <td className="px-6 py-4"></td>
-            <td className="px-6 py-4"></td>
-            <td className="px-6 py-4"></td>
-            <td className="px-6 py-4 text-right"></td>
-          </tr>
+          {rooms.map((room) => (
+            <tr key={room.id} className="hover:bg-gray-100">
+              <td className="px-2 py-4">
+              <div className="h-20 w-32 relative">
+              <Image
+                src={room.image}
+                fill
+                sizes="20vw"
+                alt="room image"
+                className="object-cover"
+                />
+              </div>
+
+                </td>
+              <td className="px-6 py-4">{room.name}</td>
+              <td className="px-6 py-4">{room.price}</td>
+              <td className="px-6 py-4">{room.createdAt.toString()}
+              </td>
+              <td className="px-6 py-4 text-right"></td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
