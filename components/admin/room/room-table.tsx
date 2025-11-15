@@ -48,7 +48,9 @@ const RoomTable = async () => {
               <td className="px-6 py-4">{formatCurrency(room.price)}</td>
               <td className="px-6 py-4">{formatDate(room.createdAt.toString())}
               </td>
-              <td className="px-6 py-4 text-right"></td>
+              <td className="px-6 py-4 text-right">
+                <DeleteButton id={room.id} image={room.image} />
+              </td>
             </tr>
           ))}
         </tbody>
