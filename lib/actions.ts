@@ -1,30 +1,38 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { ContactSchema,RoomSchema } from "@/lib/zod";
+import { ContactSchema, RoomSchema } from "@/lib/zod";
 import { redirect } from "next/navigation";
+import { del } from "@vercel/blob";
+import { revalidatePath } from "next/cache";
 
-export const saveRoom = async (image:string, prevState: unknown, formData:FormData) => {
-  if(!image) return {message: "image is required."}
+// save Room
+export const saveRoom = async (
+  image: string,
+  prevState: unknown,
+  formData: FormData
+) => {
+  if (!image) return { message: "image is required." };
 
   const rawdata = {
     name: formData.get("name"),
     description: formData.get("description"),
     capacity: formData.get("capacity"),
     price: formData.get("price"),
-    amenities: formData.getAll("amenities")
+    amenities: formData.getAll("amenities"),
   };
 
   const validatedFields = RoomSchema.safeParse(rawdata);
-  if(!validatedFields.success) {
-    return {error: validatedFields.error.flatten().fieldErrors}
+  if (!validatedFields.success) {
+    return { error: validatedFields.error.flatten().fieldErrors };
   }
 
-  const {name, description, price, capacity, amenities} = validatedFields.data;
+  const { name, description, price, capacity, amenities } =
+    validatedFields.data;
 
   try {
     await prisma.room.create({
-      data:{
+      data: {
         name,
         description,
         image,
@@ -33,17 +41,17 @@ export const saveRoom = async (image:string, prevState: unknown, formData:FormDa
         ROomAmenities: {
           createMany: {
             data: amenities.map((item) => ({
-              amidenitiesid: item
-            }))
-          }
-        }
-      }
-    })
+              amidenitiesid: item,
+            })),
+          },
+        },
+      },
+    });
   } catch (error) {
     console.log(error);
   }
   redirect("/admin/room");
-}
+};
 
 export const ContactMessage = async (
   prevState: unknown,
@@ -74,4 +82,17 @@ export const ContactMessage = async (
     console.log(error);
     return { error: { general: "Something went wrong" } };
   }
+};
+
+// Delete Room
+export const deleteRoom = async (id: string, image: string) => {
+  try {
+    await del(image);
+    await prisma.room.delete({
+      where: { id },
+    })
+  } catch (error) {
+    console.log(error);
+  }
+  revalidatePath("/admin/room");
 };
