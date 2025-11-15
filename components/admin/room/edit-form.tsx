@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, useTransition } from "react";
 import { useActionState } from "react";
-import { saveRoom } from "@/lib/actions";
+import { UpdateRoom } from "@/lib/actions";
 import { PutBlobResult } from "@vercel/blob";
 import { IoCloudUploadOutline, IoTrashOutline } from "react-icons/io5";
 import Image from "next/image";
@@ -59,7 +59,7 @@ const EditForm = ({
     });
   };
 
-  const [state, formAction, isPending] = useActionState(saveRoom.bind(null, image), null);
+  const [state, formAction, isPending] = useActionState(UpdateRoom.bind(null, image, room.id), null);
 
   const checkedAmenities = room.ROomAmenities.map((item) => item.amidenitiesid);
 
