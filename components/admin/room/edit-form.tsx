@@ -9,8 +9,15 @@ import { BarLoader } from "react-spinners";
 import { string } from "zod";
 import { Amenities } from "@prisma/client";
 import clsx from "clsx";
+import { RoomProps } from "@/types/room";
 
-const EditForm = ({amenities}: {amenities:Amenities[]}) => {
+const EditForm = ({
+  amenities,
+  room
+}: {
+  amenities:Amenities[];
+  room: RoomProps;
+}) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState("");
   const [message, setMessage] = useState("");

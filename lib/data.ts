@@ -24,3 +24,15 @@ export const getRooms = async () => {
     console.log(error);
   }
 }
+
+export const getRoomsById = async (roomId: string) => {
+  try {
+    const result = await prisma.room.findUnique({
+      where:{id: roomId},
+      include: {ROomAmenities: {select: {amidenitiesid: true}}}
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
