@@ -11,7 +11,7 @@ export const EditButton = ({ id }: { id: string }) => {
 export const DeleteButton = ({ id, image }: { id: string; image: string }) => {
   const DeleteRoomWithId = deleteRoom.bind(null, id, image);
   return (
-    <form action="DeleteRoomWithId">
+    <form action={DeleteRoomWithId}>
       <button
         type="submit"
         className="rounded-sm hover:bg-gray-200 cursor-pointer"
