@@ -19,7 +19,7 @@ const EditForm = ({
   room: RoomProps;
 }) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(room.image);
   const [message, setMessage] = useState("");
   const [pending, startTranstition] = useTransition();
 
@@ -61,6 +61,8 @@ const EditForm = ({
 
   const [state, formAction, isPending] = useActionState(saveRoom.bind(null, image), null);
 
+  const checkedAmenities = room.ROomAmenities.map((item) => item.amidenitiesid);
+
   return (
     <form action={formAction}>
       <div className="grid md:grid-cols-12 gap-5">
@@ -69,6 +71,7 @@ const EditForm = ({
             <input
               type="text"
               name="name"
+              defaultValue={room.name}
               className="py-2 px-4 rounded-sm border border-gray-400 w-full"
               placeholder="Room Name"
             />
@@ -79,7 +82,8 @@ const EditForm = ({
           <div className="mb-4">
             <textarea
               name="description"
-              rows={5}
+              rows={8}
+              defaultValue={room.description}
               className="py-2 px-4 rounded-sm border border-gray-400 w-full"
               placeholder="Description"
             ></textarea>
@@ -94,6 +98,7 @@ const EditForm = ({
               type="checkbox"
               name="amenities"
               defaultValue={item.id}
+              defaultChecked={checkedAmenities.includes(item.id)}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
               placeholder="Chekbox"
             />
@@ -161,6 +166,7 @@ const EditForm = ({
             <input
               type="text"
               name="capacity"
+              defaultValue={room.capacity}
               className="py-2 px-4 rounded-sm border border-gray-400 w-full"
               placeholder="capacity"
             />
@@ -172,6 +178,7 @@ const EditForm = ({
             <input
               type="text"
               name="price"
+              defaultValue={room.price}
               className="py-2 px-4 rounded-sm border border-gray-400 w-full"
               placeholder="Price..."
             />
