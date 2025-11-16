@@ -3,7 +3,7 @@ import RoomDetail from "@/components/room-detail"
 import { Suspense } from "react"
 
 export const metadata:Metadata = {
-  title: "Rom Detail"
+  title: "Room Detail"
 }
 
 const RoomDetailPage = async ({
@@ -12,6 +12,7 @@ const RoomDetailPage = async ({
   params: Promise<{roomId: string}>
 }) => {
   const roomId = (await params).roomId;
+
   return (
     <div className="mt-16">
       <Suspense fallback={<p>loading...</p>}>

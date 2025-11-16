@@ -7,6 +7,7 @@ import { formatCurrency } from "@/lib/utils";
 const RoomDetail = async ({ roomid }: { roomid: string }) => {
   const room = await getRoomDetailById(roomid);
   if (!room) return notFound();
+
   return (
     <div className="max-w-screen-xl py-16 px-4 grid lg:grid-cols-12 gap-8 mx-auto">
       <div className="md:col-span-8">
@@ -25,7 +26,7 @@ const RoomDetail = async ({ roomid }: { roomid: string }) => {
         <h5 className="text-lg font-bold py-1 mt-1">Amenities:</h5>
         <div className="grid md:grid-cols-3">
           {room.ROomAmenities.map((item) => (
-            <div className="flex gap-1 py-1">
+            <div className="flex gap-1 py-1" key={item.id}>
               <IoCheckmark className="size-5" />
               <span>{item.amenities.name}</span>
             </div>
