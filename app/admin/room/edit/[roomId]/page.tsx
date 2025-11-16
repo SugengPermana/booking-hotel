@@ -5,9 +5,9 @@ import { Suspense } from "react";
 const UpdateRoomPage = async ({
     params
 }:{
-    params: Promise<{ id: string }>
+    params: Promise<{ roomId: string }>
 }) => {
-  const roomid = (await params).id;
+  const roomid = (await params).roomId;
   if(!roomid) return notFound();
 
   return (
