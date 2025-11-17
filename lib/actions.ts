@@ -92,7 +92,7 @@ export const deleteRoom = async (id: string, image: string) => {
     await del(image);
     await prisma.room.delete({
       where: { id },
-    })
+    });
   } catch (error) {
     console.log(error);
   }
@@ -127,7 +127,7 @@ export const UpdateRoom = async (
   try {
     await prisma.$transaction([
       prisma.room.update({
-        where: {id: roomId},
+        where: { id: roomId },
         data: {
           name,
           description,
@@ -135,17 +135,17 @@ export const UpdateRoom = async (
           price,
           capacity,
           ROomAmenities: {
-            deleteMany: {}
-          }
-        }
+            deleteMany: {},
+          },
+        },
       }),
       prisma.roomAmenities.createMany({
         data: amenities.map((item) => ({
           roomid: roomId,
           amidenitiesid: item,
-        }))
-      })
-    ])
+        })),
+      }),
+    ]);
   } catch (error) {
     console.log(error);
   }
@@ -162,21 +162,22 @@ export const createReverse = async (
   formData: FormData
 ) => {
   const session = await auth();
-  if(!session || !session.user || !session.user.id) redirect(`/signin?redirect_url=room/${roomId}`);
+  if (!session || !session.user || !session.user.id)
+    redirect(`/signin?redirect_url=room/${roomId}`);
   const rawdata = {
     name: formData.get("name"),
-    Phone: formData.get("phone"),
-  }
+    phone: formData.get("phone"),
+  };
   const validatedFields = ReserveSchema.safeParse(rawdata);
-  if(!validatedFields.success) {
+  if (!validatedFields.success) {
     return {
-      error: validatedFields.error?.flatten().fieldErrors
-    }
+      error: validatedFields.error?.flatten().fieldErrors,
+    };
   }
 
-  const {name, phone} = validatedFields.data;
+  const { name, phone } = validatedFields.data;
   const night = differenceInCalendarDays(endDate, startDate);
-  if(night <= 0) return {messageDate: "Date Must be at least 1 night "}
+  if (night <= 0) return { messageDate: "Date Must be at least 1 night " };
 
   const total = night * price;
 
@@ -186,9 +187,9 @@ export const createReverse = async (
       await tx.user.update({
         data: {
           name,
-          phone
+          phone,
         },
-        where: {id: session.user.id}
+        where: { id: session.user.id },
       });
       const reservation = await tx.reservation.create({
         data: {
@@ -199,15 +200,15 @@ export const createReverse = async (
           userId: session.user.id as string,
           Payment: {
             create: {
-              amount: total
-            }
-          }
-        }
+              amount: total,
+            },
+          },
+        },
       });
-      reservationId= reservation.id;
+      reservationId = reservation.id;
     });
   } catch (error) {
     console.log(error);
   }
-  redirect(`/checkout/${reservationId}`)
+  redirect(`/checkout/${reservationId}`);
 };

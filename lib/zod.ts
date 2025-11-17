@@ -1,4 +1,4 @@
-import {object, string, coerce, array } from "zod";
+import {object, string, coerce, array, number } from "zod";
 
 export const RoomSchema = object({
   name:string().min(1),
@@ -8,8 +8,8 @@ export const RoomSchema = object({
   amenities: array(string()).nonempty(), 
 })
 
-export const ResevereSchema = object({
-  name:string().min(1),
+export const ReserveSchema = object({
+  name: string().min(1),
   phone: string().min(10)
 })
 
