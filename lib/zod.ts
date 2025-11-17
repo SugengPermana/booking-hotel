@@ -8,7 +8,7 @@ export const RoomSchema = object({
   amenities: array(string()).nonempty(), 
 })
 
-export const ReseverSchema = object({
+export const ResevereSchema = object({
   name:string().min(1),
   phone: string().min(10)
 })
