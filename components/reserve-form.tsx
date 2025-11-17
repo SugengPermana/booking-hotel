@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { addDays } from "date-fns";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const ReverseForm = () => {
+export const ReverseForm = () => {
   const StartDate = new Date();
   const EndDate = addDays(StartDate, 1);
 

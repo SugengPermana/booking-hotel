@@ -3,6 +3,7 @@ import { getRoomDetailById } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { IoCheckmark,IoPeopleOutline } from "react-icons/io5";
 import { formatCurrency } from "@/lib/utils";
+import ReverseForm from "@/components/reserve-form";
 
 const RoomDetail = async ({ roomid }: { roomid: string }) => {
   const room = await getRoomDetailById(roomid);
@@ -48,7 +49,7 @@ const RoomDetail = async ({ roomid }: { roomid: string }) => {
             </div>
           </div>
           {/* Reservation Form */}
-          
+          <ReverseForm />
         </div>
       </div>
     </div>
