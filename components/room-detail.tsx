@@ -33,7 +33,7 @@ const RoomDetail = async ({ roomid }: { roomid: string }) => {
           ))}
         </div>
       </div>
-      <div className="md:col-end-4">
+      <div className="md:col-span-4">
         <div className="border-2 border-gray-300 border-dashed px-3 py-5 bg-slate-50 rounded-sm">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-2">
