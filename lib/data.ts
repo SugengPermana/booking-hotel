@@ -12,35 +12,35 @@ export const getAmenities = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getRooms = async () => {
   try {
     const result = await prisma.room.findMany({
-      orderBy:{createdAt:"desc"},
+      orderBy: { createdAt: "desc" },
     });
     return result;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getRoomsById = async (roomId: string) => {
   try {
     const result = await prisma.room.findUnique({
-      where:{id: roomId},
-      include: {ROomAmenities: {select: {amidenitiesid: true}}}
+      where: { id: roomId },
+      include: { ROomAmenities: { select: { amidenitiesid: true } } },
     });
     return result;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getRoomDetailById = async (roomId: string) => {
   try {
     const result = await prisma.room.findUnique({
-      where:{id: roomId},
+      where: { id: roomId },
       include: {
         ROomAmenities: {
           include: {
@@ -57,4 +57,33 @@ export const getRoomDetailById = async (roomId: string) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const getReservationById = async (id: string) => {
+  try {
+    const result = await prisma.reservation.findUnique({
+      where: { id },
+      include: {
+        Room: {
+          select: {
+            name: true,
+            image: true,
+            price: true,
+          },
+        },
+        user: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        Payment: true,
+      },
+    });
+
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
