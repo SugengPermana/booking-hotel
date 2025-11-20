@@ -21,7 +21,7 @@ const CheckoutDetail = async ({reservationId} : {reservationId: string}) => {
             <div className="flex items-center">
                 <div className="flex items-center justify-center gap-1">
                   <span className="text-2xl">
-                    {reservation.price}
+                    {formatCurrency(reservation.price)}
                   </span>
                   <span>/ night</span>
                 </div>
@@ -72,7 +72,6 @@ const CheckoutDetail = async ({reservationId} : {reservationId: string}) => {
                 <span>
                 {formatCurrency(reservation.Payment.amount)}
                 </span>
-                
                 </td>
             </tr>
             <tr>
@@ -81,7 +80,6 @@ const CheckoutDetail = async ({reservationId} : {reservationId: string}) => {
                 <span>
                 {reservation.Payment.status}
                 </span>
-                
                 </td>
             </tr>
           </tbody>
