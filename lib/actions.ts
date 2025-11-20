@@ -55,10 +55,22 @@ export const saveRoom = async (
   redirect("/admin/room");
 };
 
+export type ContactActionState = {
+  error?: {
+    name?: string[];
+    email?: string[];
+    subject?: string[];
+    message?: string[];
+    general?: string;
+  };
+  message?: string;
+} | null;
+
 export const ContactMessage = async (
   prevState: unknown,
   formData: FormData
-) => {
+): Promise<ContactActionState> => {
+
   const validatedFields = ContactSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
