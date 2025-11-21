@@ -1,12 +1,15 @@
 import Image from "next/image";
-import { getRoomDetailById } from "@/lib/data";
+import { getRoomDetailById, getDisableRoomById } from "@/lib/data";
 import { notFound } from "next/navigation";
-import { IoCheckmark,IoPeopleOutline } from "react-icons/io5";
+import { IoCheckmark, IoPeopleOutline } from "react-icons/io5";
 import { formatCurrency } from "@/lib/utils";
 import ReverseForm from "@/components/reserve-form";
 
 const RoomDetail = async ({ roomid }: { roomid: string }) => {
-  const room = await getRoomDetailById(roomid);
+  const [room, disabledDate] = await Promise.all([
+    getRoomDetailById(roomid),
+    getDisableRoomById(roomid),
+  ]);
   if (!room) return notFound();
 
   return (
@@ -38,18 +41,21 @@ const RoomDetail = async ({ roomid }: { roomid: string }) => {
         <div className="border-2 border-gray-300 border-dashed px-3 py-5 bg-slate-50 rounded-sm">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-2">
-              <IoPeopleOutline className="size-4"/>
+              <IoPeopleOutline className="size-4" />
               <span>
                 {room.capacity} {room.capacity === 1 ? "person" : "people"}
               </span>
             </div>
             <div className="flex items-center">
-              <span className="text-2xl font-semibold text-gray-600">{formatCurrency(room.price)}</span>
+              <span className="text-2xl font-semibold text-gray-600">
+                {formatCurrency(room.price)}
+              </span>
               <span className="text-gray-400 text-sm">/Night</span>
             </div>
           </div>
           {/* Reservation Form */}
-          <ReverseForm room={room}/>
+          <ReverseForm room={room} 
+          disabledDate={disabledDate}/>
         </div>
       </div>
     </div>

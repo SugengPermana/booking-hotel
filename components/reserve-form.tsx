@@ -4,10 +4,10 @@ import { addDays } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createReverse } from "@/lib/actions";
-import { RoomDetailProps } from "@/types/room";
+import { RoomDetailProps,DisabledDateProps } from "@/types/room";
 import clsx from "clsx";
 
-export const ReverseForm = ({room} : {room:RoomDetailProps}) => {
+export const ReverseForm = ({room,disabledDate} : {room:RoomDetailProps; disabledDate: }) => {
   const StartDate = new Date();
   const EndDate = addDays(StartDate, 1);
 
