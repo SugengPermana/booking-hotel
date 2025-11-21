@@ -205,7 +205,7 @@ export const createReverse = async (
       });
       const reservation = await tx.reservation.create({
         data: {
-          starDate: startDate,
+          startDate: startDate,
           endDate: endDate,
           price: price,
           roomId: roomId,

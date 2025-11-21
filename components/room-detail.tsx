@@ -10,7 +10,7 @@ const RoomDetail = async ({ roomid }: { roomid: string }) => {
     getRoomDetailById(roomid),
     getDisableRoomById(roomid),
   ]);
-  if (!room) return notFound();
+  if (!room || !disabledDate) return notFound();
 
   return (
     <div className="max-w-screen-xl py-16 px-4 grid lg:grid-cols-12 gap-8 mx-auto">

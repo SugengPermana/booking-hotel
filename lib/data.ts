@@ -92,7 +92,7 @@ export const getDisableRoomById = async (roomId: string) => {
   try {
     const result = await prisma.reservation.findMany({
       select: {
-        starDate: true,
+        startDate: true, // ← PERBAIKI INI
         endDate: true,
       },
       where: {
