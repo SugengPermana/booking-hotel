@@ -31,9 +31,9 @@ export const ReverseForm = ({
     null
   );
 
-  const excludedDates = disabledDate.flatMap((item) => {
+  const excludedDates = disabledDate.map((item) => {
     return {
-      start: item.startDate,
+      start: item.starDate,
       end: item.endDate, 
     }
   })
