@@ -34,7 +34,7 @@ export const MyReserveList = async () => {
               className="object-cover w-full rounded-t-sm h-60 md:w-1/3 md:rounded-s-sm"
               alt="image room"
             />
-            <div className="flex items-center gap-1 mb-3 font-normal text-gray-700">
+            <div className="flex items-center gap-1 mb-3 font-normal text-gray-700 w-full">
               <div className="w-full">
                 <div className="flex items-center justify-between text-sm font-medium text-gray-900 truncate">
                   <span>Price</span>
