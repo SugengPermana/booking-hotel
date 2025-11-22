@@ -53,7 +53,7 @@ export const ReverseForm = ({
             selectsRange={true}
             onChange={handleDateChange}
             excludeDateIntervals={excludedDates}
-            dateFormat={"dd-MM-YYYY"}
+            dateFormat={"dd-MM-yyyy"}
             wrapperClassName="w-full"
             className="py-2 px-4 rounded-sm border border-gray-300 w-full"
           />
