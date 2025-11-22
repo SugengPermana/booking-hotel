@@ -168,7 +168,7 @@ export const UpdateRoom = async (
 export const createReverse = async (
   roomId: string,
   price: number,
-  startDate: Date,
+  starDate: Date,
   endDate: Date,
   prevState: unknown,
   formData: FormData
@@ -188,7 +188,7 @@ export const createReverse = async (
   }
 
   const { name, phone } = validatedFields.data;
-  const night = differenceInCalendarDays(endDate, startDate);
+  const night = differenceInCalendarDays(endDate, starDate);
   if (night <= 0) return { messageDate: "Date Must be at least 1 night " };
 
   const total = night * price;
@@ -205,7 +205,7 @@ export const createReverse = async (
       });
       const reservation = await tx.reservation.create({
         data: {
-          starDate: startDate,
+          starDate: starDate,
           endDate: endDate,
           price: price,
           roomId: roomId,

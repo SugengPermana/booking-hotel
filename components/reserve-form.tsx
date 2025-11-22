@@ -14,20 +14,20 @@ export const ReverseForm = ({
   room: RoomDetailProps;
   disabledDate: DisabledDateProps[];
 }) => {
-  const StartDate = new Date();
-  const EndDate = addDays(StartDate, 1);
+  const StarDate = new Date();
+  const EndDate = addDays(StarDate, 1);
 
-  const [startDate, setStartDate] = useState(StartDate);
+  const [starDate, setStarDate] = useState(StarDate);
   const [endDate, setEndDate] = useState(EndDate);
 
   const handleDateChange = (dates: any) => {
     const [start, end] = dates;
-    setStartDate(start);
+    setStarDate(start);
     setEndDate(end);
   };
 
   const [state, formAction, isPending] = useActionState(
-    createReverse.bind(null, room.id, room.price, startDate, endDate),
+    createReverse.bind(null, room.id, room.price, starDate, endDate),
     null
   );
 
@@ -46,8 +46,8 @@ export const ReverseForm = ({
             Arrival - Departure
           </label>
           <DatePicker
-            selected={startDate}
-            startDate={startDate}
+            selected={starDate}
+            startDate={starDate}
             endDate={endDate}
             minDate={new Date()}
             selectsRange={true}
