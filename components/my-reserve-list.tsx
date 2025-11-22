@@ -14,7 +14,7 @@ export const MyReserveList = async () => {
         <div
           className="bg-white shadow pb-4 mb-4
       md:pb-0 relative"
-        >
+          key={item.id}>
           <div className="flex items-center justify-between bg-gray-100 px-2 py-1 rounded-t-sm">
             <h1 className="text-sm font-medium text-gray-900 truncate">
               Reservation ID: #{item.id}
