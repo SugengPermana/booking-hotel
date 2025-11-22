@@ -5,7 +5,7 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import { differenceInCalendarDays } from "date-fns";
 import Link from "next/link";
 
-const MyReserveList = async () => {
+export const MyReserveList = async () => {
   const reservation = await getReservationByUserId();
   if (!reservation) return notFound();
   return (
