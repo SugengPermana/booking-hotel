@@ -138,3 +138,36 @@ export const getReservationByUserId = async () => {
     console.log(error);
   }
 };
+
+export const getRevenueAndReserve = async () => {
+  try {
+    const result = await prisma.reservation.aggregate({
+      _count: true,
+      _sum: {price: true},
+      where: {
+        Payment: { status: { not: "failed" } },
+      },
+    });
+    return {
+      revenue: result._sum.price || 0,
+      reserve: result._count,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTotalCustomer = async () => {
+  try {
+    const result = await prisma.reservation.findMany({
+      distinct: ["userId"],
+      where: {
+        Payment: { status: { not: "failed" } },
+      },
+      select: { userId: true },
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -13,7 +13,7 @@ const DashboardCards = () => {
         </div>
       </div>
       <div className="flex items-center bg-white border rounded-md overflow-hidden shadow-sm">
-        <div className="p-4 bg-green-400">
+        <div className="p-4 bg-red-400">
           <LuShoppingCart className="text-white size-12" />
         </div>
         <div className="px-4 text-gray-700">
@@ -22,7 +22,7 @@ const DashboardCards = () => {
         </div>
       </div>
       <div className="flex items-center bg-white border rounded-md overflow-hidden shadow-sm">
-        <div className="p-4 bg-green-400">
+        <div className="p-4 bg-blue-400">
           <LuUsers className="text-white size-12" />
         </div>
         <div className="px-4 text-gray-700">
