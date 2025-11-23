@@ -1,22 +1,22 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { HiXCircle } from "react-icons/hi2";
+import { HiClock } from "react-icons/hi2";
 
 export const metadata: Metadata = {
-  title: "Payment Failure",
+  title: "Payment Pending",
 };
 
-const PaymentFailure = () => {
+const PaymentPending = () => {
   return (
     <div className="max-w-screen-xl px-4 mx-auto py-20 mt-12">
       <div className="p-6 md:mx-auto">
-        <HiXCircle className="text-red-600 mx-auto size-16" />
+        <HiClock className="text-gray-600 mx-auto size-16" />
         <div className="text-center">
           <h3 className="md:text-2xl text-base text-gray-900 font-semibold">
-            Payment Failure!
+            Payment Pending!
           </h3>
           <p className="text-gray-600 my-2">
-            Payment Failed Please try again.
+            Please finising the payment soon!
           </p>
           <p>Have A great Day!</p>
 
@@ -34,4 +34,4 @@ const PaymentFailure = () => {
   );
 };
 
-export default PaymentFailure;
+export default PaymentPending;
