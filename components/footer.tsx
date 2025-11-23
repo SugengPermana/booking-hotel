@@ -82,7 +82,7 @@ const Footer = () => {
                   suppressHydrationWarning
                 />
               </div>
-              <button className="bg-orange-400 p-3 font-bold text-white w-full text-center rounded-sm hover:bg-orange-500">
+              <button suppressHydrationWarning className="bg-orange-400 p-3 font-bold text-white w-full text-center rounded-sm hover:bg-orange-500">
                 Send Message
               </button>
             </form>
