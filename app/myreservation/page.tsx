@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 export const metadata: Metadata = {
   title: "My Reservation"
 }
-const MyReservationPage =async () => {
+const MyReservationPage = async () => {
   const session = await auth()
   if (!session || !session.user) redirect("/signin")
   return (

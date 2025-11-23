@@ -1,6 +1,7 @@
 import RoomTable from "@/components/admin/room/room-table";
 import Link from "next/link";
 import { Suspense } from "react";
+import CardSkeleton from "@/components/skeletons/card-skeleton";
 
 const RoomPage = () => {
   return (
@@ -14,7 +15,7 @@ const RoomPage = () => {
           Create New
         </Link>
       </div>
-      <Suspense fallback={<p>Loading Data...</p>}>
+      <Suspense fallback={<CardSkeleton />}>
         <RoomTable />
       </Suspense>
     </div>

@@ -20,10 +20,10 @@ export const ReverseForm = ({
   const [starDate, setStarDate] = useState(StarDate);
   const [endDate, setEndDate] = useState(EndDate);
 
-  const handleDateChange = (dates: any) => {
+  const handleDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
-    setStarDate(start);
-    setEndDate(end);
+    setStarDate(start ?? StarDate);
+    setEndDate(end ?? EndDate);
   };
 
   const [state, formAction, isPending] = useActionState(

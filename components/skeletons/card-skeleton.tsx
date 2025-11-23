@@ -1,5 +1,4 @@
 
-
 const CardSkeleton = () => {
   return (
     <div className="bg-white shadow-lg rounded-sm animate-pulse">

@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import RoomDetail from "@/components/room-detail"
 import { Suspense } from "react"
+import CardSkeleton from "@/components/skeletons/card-skeleton"
 
 export const metadata:Metadata = {
   title: "Room Detail"
@@ -15,7 +16,7 @@ const RoomDetailPage = async ({
 
   return (
     <div className="mt-16">
-      <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<CardSkeleton />}>
       <RoomDetail roomid={roomId}/>
       </Suspense>
     </div>
