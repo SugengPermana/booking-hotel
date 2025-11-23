@@ -1,11 +1,10 @@
-import { getRooms } from "@/lib/data";
+import { getReservations } from "@/lib/data";
 import Image from "next/image";
 import { formatDate, formatCurrency } from "@/lib/utils";
-import { DeleteButton, EditButton } from "@/components/admin/room/button";
 
 const ReservationList = async () => {
-  const rooms = await getRooms();
-  if (!rooms?.length) return <p>NO ROOM FOUND</p>;
+  const reservation = await getReservations();
+  if (!reservation) return <p>NO ROOM FOUND</p>;
 
   return (
     <div className="bg-white p-6 mt-5 shadow-sm">
@@ -14,6 +13,15 @@ const ReservationList = async () => {
           <tr>
             <th className="px-6 py-3 w-32 text-sm font-bold text-gray-700 uppercase text-left">
               Image
+            </th>
+            <th className="px-6 py-3 w-32 text-sm font-bold text-gray-700 uppercase text-left">
+              Name
+            </th>
+            <th className="px-6 py-3 w-32 text-sm font-bold text-gray-700 uppercase text-left">
+              Arrival
+            </th>
+            <th className="px-6 py-3 w-32 text-sm font-bold text-gray-700 uppercase text-left">
+              Departure
             </th>
             <th className="px-6 py-3 w-32 text-sm font-bold text-gray-700 uppercase text-left">
               Room Name
@@ -25,17 +33,17 @@ const ReservationList = async () => {
               Created at
             </th>
             <th className="px-6 py-3 w-32 text-sm font-bold text-gray-700 uppercase ">
-              Action
+              Status
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {rooms.map((room) => (
-            <tr key={room.id} className="hover:bg-gray-100">
+          {reservation.map((reserve) => (
+            <tr key={reserve.id} className="hover:bg-gray-100">
               <td className="px-2 py-4">
               <div className="h-20 w-32 relative">
               <Image
-                src={room.image}
+                src={reserve.Room.image}
                 fill
                 sizes="20vw"
                 alt="room image"
@@ -44,15 +52,15 @@ const ReservationList = async () => {
               </div>
 
                 </td>
-              <td className="px-6 py-4">{room.name}</td>
-              <td className="px-6 py-4">{formatCurrency(room.price)}</td>
-              <td className="px-6 py-4">{formatDate(room.createdAt.toString())}
+              <td className="px-6 py-4">{reserve.user.name}</td>
+              <td className="px-6 py-4">{formatDate(reserve.starDate.toISOString())}</td>
+              <td className="px-6 py-4">{formatDate(reserve.endDate.toISOString())}</td>
+              <td className="px-6 py-4">{reserve.Room.name}</td>
+              <td className="px-6 py-4">{formatCurrency(reserve.price)}</td>
+              <td className="px-6 py-4">{formatDate(reserve.createdAt.toString())}
               </td>
               <td className="px-6 py-4 text-right">
-                <div className="flex items-center justify-center gap-1">
-                <EditButton id={room.id} />
-                <DeleteButton id={room.id} image={room.image} />
-                </div>
+                <span className="capitalize">{reserve.Payment?.status}</span>
               </td>
             </tr>
           ))}
