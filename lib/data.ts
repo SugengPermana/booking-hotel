@@ -120,18 +120,18 @@ export const getReservationByUserId = async () => {
             name: true,
             image: true,
             price: true,
-          }
+          },
         },
         user: {
           select: {
             name: true,
             email: true,
             phone: true,
-          }
+          },
         },
-        Payment: true
+        Payment: true,
       },
-      orderBy: { createdAt: "desc"}
+      orderBy: { createdAt: "desc" },
     });
     return result;
   } catch (error) {
@@ -143,7 +143,7 @@ export const getRevenueAndReserve = async () => {
   try {
     const result = await prisma.reservation.aggregate({
       _count: true,
-      _sum: {price: true},
+      _sum: { price: true },
       where: {
         Payment: { status: { not: "failed" } },
       },
@@ -165,6 +165,43 @@ export const getTotalCustomer = async () => {
         Payment: { status: { not: "failed" } },
       },
       select: { userId: true },
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReservations = async () => {
+  const session = await auth();
+  if (
+    !session ||
+    !session.user ||
+    !session.user.id ||
+    session.user.role !== "admin"
+  ) {
+    throw new Error("Unauthorized Access");
+  }
+  try {
+    const result = await prisma.reservation.findMany({
+      include: {
+        Room: {
+          select: {
+            name: true,
+            image: true,
+            price: true,
+          },
+        },
+        user: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        Payment: true,
+      },
+      orderBy: { createdAt: "desc" },
     });
     return result;
   } catch (error) {
