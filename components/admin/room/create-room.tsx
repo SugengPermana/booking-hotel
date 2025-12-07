@@ -1,6 +1,8 @@
 import CreateForm from "@/components/admin/room/create-form";
 import { getAmenities } from "@/lib/data";
 
+// component render create room page
+
 const CreateRoom = async () => {
   const amenities = await getAmenities();
   if(!amenities) return null;

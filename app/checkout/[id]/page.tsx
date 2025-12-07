@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: "Reservation Summary",
 };
 
+//reservation summary = ngerender saat kita setelah reservation sebelum peroses payment
+
 const CheckoutPage = async ({
   params,
 }: {

@@ -1,34 +1,36 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "./auth";
+import { NextResponse } from "next/server";
+import { auth } from "./auth"; // Auth.js middleware helper
 
 const ProtectRoutes = ["/myreservation", "/checkout", "/admin"];
 
-export async function middleware(request: NextRequest) {
-  const session = await auth();
-  const role = session?.user?.role;
+export default auth((req) => {
+  const { nextUrl } = req;
+  const pathname = nextUrl.pathname;
+  const role = req.auth?.user?.role;
   const isLoggedIn = !!role;
-  const { pathname } = request.nextUrl;
 
-  // ✅ Hanya proses route yang dilindungi
-  const isProtected = ProtectRoutes.some((route) => pathname.startsWith(route));
+  const isProtected = ProtectRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
 
+  // ⛔ Belum login, akses route terproteksi
   if (!isLoggedIn && isProtected) {
-    return NextResponse.redirect(new URL("/signin", request.url));
+    return NextResponse.redirect(new URL("/signin", req.url));
   }
 
+  // ⛔ Sudah login tapi bukan admin, akses /admin
   if (isLoggedIn && role !== "admin" && pathname.startsWith("/admin")) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
+  // ⛔ Sudah login tapi buka /signin
   if (isLoggedIn && pathname.startsWith("/signin")) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
-}
+});
 
-// ✅ Matcher: jalankan middleware di semua route
-// kecuali API routes, file statis, favicon, sitemap, robots.txt
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',

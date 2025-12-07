@@ -10,6 +10,8 @@ import { string } from "zod";
 import { Amenities } from "@prisma/client";
 import clsx from "clsx";
 
+// Create Room Form Component
+
 const CreateForm = ({amenities}: {amenities:Amenities[]}) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState("");

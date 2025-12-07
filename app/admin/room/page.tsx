@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Suspense } from "react";
 import CardSkeleton from "@/components/skeletons/card-skeleton";
 
+// Manage Room
+
 const RoomPage = () => {
   return (
     <div className="max-w-screen-xl px-4 py-16 mt-10 mx-auto">

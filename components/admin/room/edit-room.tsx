@@ -2,6 +2,8 @@ import { getAmenities, getRoomsById } from "@/lib/data";
 import EditForm from "@/components/admin/room/edit-form";
 import { notFound } from "next/navigation";
 
+// Edit Room Component
+
 const EditRoom = async ({roomid}: {roomid: string}) => {
   const [amenities,room] = await Promise.all([
     getAmenities(), getRoomsById(roomid)

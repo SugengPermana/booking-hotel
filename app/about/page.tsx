@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "who we are"
 }
 
+// Render About Page
+
 const AboutPage = () => {
   return (
     <div>

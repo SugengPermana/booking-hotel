@@ -11,6 +11,8 @@ import { Amenities } from "@prisma/client";
 import clsx from "clsx";
 import { RoomProps } from "@/types/room";
 
+// Edit Room Form Component
+
 const EditForm = ({
   amenities,
   room
